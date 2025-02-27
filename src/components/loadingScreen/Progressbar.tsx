@@ -1,7 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
 
-import "./loadingScreen.css";
-
 type ProgressBarProps = {
   maxAge: number;
   timeElapsed: number;

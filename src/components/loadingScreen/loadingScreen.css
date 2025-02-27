@@ -1,5 +1,0 @@
-#progress {
-  background: linear-gradient(rgb(201, 60, 241) 0%, rgb(97, 10, 85) 90%),
-    linear-gradient(to right, rgb(111, 45, 129) 0%, rgb(255, 193, 216) 90%);
-  background-blend-mode: screen, difference, lighten;
-}

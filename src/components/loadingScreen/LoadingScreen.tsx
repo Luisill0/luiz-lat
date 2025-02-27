@@ -12,8 +12,6 @@ import { DinoWalking } from "assets";
 import { generateRandomInterval } from "utils/random";
 import ProgressBar from "./Progressbar";
 
-import "./loadingScreen.css";
-
 type ReducerState = {
   timeStarted: number;
   timeElapsed: number;
@@ -67,11 +65,9 @@ const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
         className={`
             flex flex-col items-center justify-center
             overflow-hidden
+            h-[100vh]
             ${loadingFinished && "hidden"}
         `}
-        style={{
-          height: `${loadingFinished ? "0px" : "100vh"}`,
-        }}
       >
         <div className="relative flex justify-center">
           <img
