@@ -1,17 +1,29 @@
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
 import { LayoutContext } from "context/layout";
 import { LayoutState } from "interface/layout";
+import { useWindow } from "hook/useWindow";
 
 type LayoutProviderProps = {
   children: ReactNode | ReactNode[];
 };
 
 const LayoutProvider: FC<LayoutProviderProps> = ({ children }) => {
-  const [state, setState] = useState<LayoutState>({ navbar: true });
+  const { windowSize } = useWindow();
+  const [state, setState] = useState<LayoutState>({
+    navbar: false,
+    mobile: windowSize.innerHeight > windowSize.innerWidth,
+  });
+
+  useEffect(() => {
+    setState((state) => ({
+      ...state,
+      mobile: windowSize.innerHeight > windowSize.innerWidth,
+    }));
+  }, [windowSize]);
 
   const value = {
-    state: state,
+    state,
     updateState: setState,
   };
 

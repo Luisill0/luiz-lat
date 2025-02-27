@@ -2,6 +2,8 @@ import {
   FC,
   ReactNode,
   Reducer,
+  useCallback,
+  useContext,
   useEffect,
   useReducer,
   useRef,
@@ -9,7 +11,9 @@ import {
 } from "react";
 
 import { DinoWalking } from "assets";
+import { LayoutContext } from "context/layout";
 import { generateRandomInterval } from "utils/random";
+
 import ProgressBar from "./Progressbar";
 
 type ReducerState = {
@@ -36,6 +40,9 @@ type LoadingScrenProps = {
 };
 
 const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
+  const { state: layoutState, updateState: updateLayoutState } =
+    useContext(LayoutContext)!;
+
   const [maxAge] = useState(generateRandomInterval(4_000, 8_000));
   const [loadingFinished, setLoadingFinished] = useState(false);
 
@@ -43,6 +50,11 @@ const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
     timeStarted: Date.now(),
     timeElapsed: 0,
   });
+
+  const onLoadingFinished = useCallback(() => {
+    setLoadingFinished(true);
+    updateLayoutState({ ...layoutState, navbar: true });
+  }, [layoutState, updateLayoutState]);
 
   const gifRef = useRef<HTMLImageElement | null>(null);
 
@@ -55,9 +67,9 @@ const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
 
   useEffect(() => {
     if (state.timeElapsed > maxAge) {
-      setTimeout(() => setLoadingFinished(true), 2000);
+      setTimeout(onLoadingFinished, 2000);
     }
-  }, [maxAge, state]);
+  }, [maxAge, state, onLoadingFinished]);
 
   return (
     <>
