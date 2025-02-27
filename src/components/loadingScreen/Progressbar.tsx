@@ -30,9 +30,9 @@ const ProgressBar: FC<ProgressBarProps> = ({ maxAge, timeElapsed }) => {
       className="
         relative
         w-1/2 h-[3rem]
-        border-1 border-primary
+        border-1 border-pri
         rounded-3xl
-        text-center text-primary
+        text-center text-pri
       "
     >
       <span

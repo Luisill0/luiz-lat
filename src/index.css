@@ -1,10 +1,16 @@
-@import "tailwindcss";
+@layer theme, base, primereact, components, utilities;
 
-@theme static {
-  --color-primary: #450920;
-  --color-secondary: #fbf0ff;
-  --color-accent: #c589e8;
-  --color-turquoise: #29e7cd;
+@import "primereact/resources/themes/lara-light-purple/theme.css"
+  layer(primereact);
+@import "primeicons/primeicons.css";
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --color-pri: #450920;
+  --color-sec: #fbf0ff;
 }
 
 :root {
@@ -21,7 +27,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--color-secondary);
+  overflow: scroll;
+  background-color: var(--color-sec);
 }
 
 #progress {
