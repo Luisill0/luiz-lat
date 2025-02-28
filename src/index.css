@@ -10,7 +10,7 @@
 
 @theme {
   --color-pri: #450920;
-  --color-sec: #fbf0ff;
+  --color-sec: #fffeff;
 }
 
 :root {
@@ -27,7 +27,6 @@
 body {
   margin: 0;
   min-height: 100vh;
-  overflow: scroll;
   background-color: var(--color-sec);
 }
 
