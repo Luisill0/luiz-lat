@@ -20,6 +20,7 @@ export const useWindow = () => {
   }, []);
 
   return {
-    windowSize,
+    innerHeight: windowSize.innerHeight,
+    innerWidth: windowSize.innerWidth,
   };
 };

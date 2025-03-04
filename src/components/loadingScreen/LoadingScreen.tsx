@@ -2,8 +2,6 @@ import {
   FC,
   ReactNode,
   Reducer,
-  useCallback,
-  useContext,
   useEffect,
   useReducer,
   useRef,
@@ -11,7 +9,6 @@ import {
 } from "react";
 
 import { DinoWalking } from "assets";
-import { LayoutContext } from "context/layout";
 import { generateRandomInterval } from "utils/random";
 
 import ProgressBar from "./Progressbar";
@@ -40,21 +37,14 @@ type LoadingScrenProps = {
 };
 
 const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
-  const { state: layoutState, updateState: updateLayoutState } =
-    useContext(LayoutContext)!;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [maxAge] = useState(generateRandomInterval(4_000, 8_000));
-  const [loadingFinished, setLoadingFinished] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, {
     timeStarted: Date.now(),
     timeElapsed: 0,
   });
-
-  const onLoadingFinished = useCallback(() => {
-    setLoadingFinished(true);
-    updateLayoutState({ ...layoutState, navbar: true });
-  }, [layoutState, updateLayoutState]);
 
   const gifRef = useRef<HTMLImageElement | null>(null);
 
@@ -67,18 +57,21 @@ const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
 
   useEffect(() => {
     if (state.timeElapsed > maxAge) {
-      setTimeout(onLoadingFinished, 2000);
+      setIsLoading(false);
     }
-  }, [maxAge, state, onLoadingFinished]);
+  }, [maxAge, state.timeElapsed]);
 
   return (
     <>
       <div
         className={`
+            absolute top-0 left-0
+            bg-sec
             flex flex-col items-center justify-center
             overflow-hidden
-            h-[100vh]
-            ${loadingFinished && "hidden"}
+            h-[100vh] w-[100vw]
+            z-20
+            ${!isLoading && "hidden"}
         `}
       >
         <div className="relative flex justify-center">
@@ -106,7 +99,7 @@ const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
         </div>
         <ProgressBar timeElapsed={state.timeElapsed} maxAge={maxAge} />
       </div>
-      {children}
+      {!isLoading && children}
     </>
   );
 };

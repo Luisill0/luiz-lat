@@ -1,17 +1,52 @@
-import { AnchorHTMLAttributes, DetailedHTMLProps, FC, useContext } from "react";
+import { FC, useCallback, useContext } from "react";
 
-import { LayoutContext } from "context/layout";
 import { Menubar } from "primereact/menubar";
 
+import { LayoutContext } from "context/layout";
+import { GlobalContext } from "context/global";
+
+import { DivProps } from "interface/html";
+import { Sections } from "interface/enums";
+
 const Navbar: FC = () => {
-  const { state } = useContext(LayoutContext)!;
+  const { updateCurrentSection } = useContext(GlobalContext)!;
+  const { setNavbarHeight } = useContext(LayoutContext)!;
+
+  const onNavbarRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (!node) return;
+      setNavbarHeight(node.clientHeight);
+    },
+    [setNavbarHeight]
+  );
+
+  const RightLinks = () => (
+    <div className="flex justify-end items-center gap-4 pe-3">
+      <NavLink
+        label="Home"
+        icon="pi pi-home"
+        onClick={() => updateCurrentSection(Sections.HOME)}
+      />
+      <NavLink
+        label="About"
+        icon="pi pi-user"
+        onClick={() => updateCurrentSection(Sections.ABOUT)}
+      />
+      <NavLink
+        label="My Work"
+        icon="pi pi-briefcase"
+        onClick={() => updateCurrentSection(Sections.PROJECTS)}
+      />
+      <NavLink
+        label="Contact"
+        icon="pi pi-envelope"
+        onClick={() => updateCurrentSection(Sections.CONTACT)}
+      />
+    </div>
+  );
 
   return (
-    <div
-      style={{
-        display: `${state.navbar ? "inline" : "none"}`,
-      }}
-    >
+    <div ref={onNavbarRef} className="select-none fixed top-0 w-full">
       <Menubar
         id="custom-navbar"
         start={LeftIcon}
@@ -31,49 +66,39 @@ const Navbar: FC = () => {
 };
 
 const LeftIcon = () => (
-  <a
-    href="#"
+  <div
     className="
         flex items-center
         font-mono text-3xl
-        hover:opacity-85
+        cursor-default
     "
   >
-    <img className="w-10 h-10" src="/android-chrome-192x192.png" />
+    <img
+      draggable={false}
+      className="w-10 h-10"
+      src="/android-chrome-192x192.png"
+    />
     <span className="h-fit w-fit">luiz.lat</span>
-  </a>
+  </div>
 );
 
-type AnchorProps = DetailedHTMLProps<
-  AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
->;
-
-type NavLinkProps = AnchorProps & {
+type NavLinkProps = DivProps & {
   label: string;
   icon: string;
 };
 
 const NavLink: FC<NavLinkProps> = ({ label, icon, ...props }) => (
-  <a {...props}>
-    <div
-      className="
+  <div
+    {...props}
+    className="
         flex items-center justify-center gap-2
         font-medium
+        cursor-pointer
         hover:opacity-60
       "
-    >
-      <i className={icon} />
-      <span>{label}</span>
-    </div>
-  </a>
-);
-
-const RightLinks = () => (
-  <div className="flex justify-end items-center gap-4 pe-3">
-    <NavLink href={"#about"} label="About" icon="pi pi-user" />
-    <NavLink href={"#projects"} label="My Work" icon="pi pi-briefcase" />
-    <NavLink href={"#contact"} label="Contact" icon="pi pi-envelope" />
+  >
+    <i className={icon} />
+    <span>{label}</span>
   </div>
 );
 

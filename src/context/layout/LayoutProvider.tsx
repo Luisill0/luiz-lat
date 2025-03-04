@@ -1,7 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 
 import { LayoutContext } from "context/layout";
-import { LayoutState } from "interface/layout";
 import { useWindow } from "hook/useWindow";
 
 type LayoutProviderProps = {
@@ -9,22 +8,20 @@ type LayoutProviderProps = {
 };
 
 const LayoutProvider: FC<LayoutProviderProps> = ({ children }) => {
-  const { windowSize } = useWindow();
-  const [state, setState] = useState<LayoutState>({
-    navbar: false,
-    mobile: windowSize.innerHeight > windowSize.innerWidth,
-  });
+  const windowSize = useWindow();
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
+  const [mobile, setMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    setState((state) => ({
-      ...state,
-      mobile: windowSize.innerHeight > windowSize.innerWidth,
-    }));
+    const { innerHeight, innerWidth } = windowSize;
+    setMobile(innerHeight > innerWidth);
   }, [windowSize]);
 
   const value = {
-    state,
-    updateState: setState,
+    navbarHeight,
+    setNavbarHeight,
+    mobile,
+    window: windowSize,
   };
 
   return (
