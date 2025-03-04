@@ -1,13 +1,10 @@
-import { FC, ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { LayoutContext } from "context/layout";
 import { useWindow } from "hook/useWindow";
+import { ComponentWithChildren } from "interface/html";
 
-type LayoutProviderProps = {
-  children: ReactNode | ReactNode[];
-};
-
-const LayoutProvider: FC<LayoutProviderProps> = ({ children }) => {
+const LayoutProvider: ComponentWithChildren = ({ children }) => {
   const windowSize = useWindow();
   const [navbarHeight, setNavbarHeight] = useState<number>(0);
   const [mobile, setMobile] = useState<boolean>(false);

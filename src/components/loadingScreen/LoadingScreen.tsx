@@ -1,17 +1,10 @@
-import {
-  FC,
-  ReactNode,
-  Reducer,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { Reducer, useEffect, useReducer, useRef, useState } from "react";
 
 import { DinoWalking } from "assets";
 import { generateRandomInterval } from "utils/random";
 
 import ProgressBar from "./Progressbar";
+import { ComponentWithChildren } from "interface/html";
 
 type ReducerState = {
   timeStarted: number;
@@ -32,11 +25,7 @@ const reducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   throw Error("Unknown action");
 };
 
-type LoadingScrenProps = {
-  children?: ReactNode | ReactNode[];
-};
-
-const LoadingScreen: FC<LoadingScrenProps> = ({ children }) => {
+const LoadingScreen: ComponentWithChildren = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [maxAge] = useState(generateRandomInterval(4_000, 8_000));

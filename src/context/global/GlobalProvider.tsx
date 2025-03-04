@@ -1,13 +1,11 @@
-import { FC, ReactNode, useState } from "react";
+import { useState } from "react";
 
 import { GlobalContext } from "context/global";
+
 import { Sections } from "interface/enums";
+import { ComponentWithChildren } from "interface/html";
 
-type GlobalProviderProps = {
-  children: ReactNode | ReactNode[];
-};
-
-const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
+const GlobalProvider: ComponentWithChildren = ({ children }) => {
   const [currentSection, setCurrentSection] = useState<Sections>(Sections.HOME);
 
   const value = {
