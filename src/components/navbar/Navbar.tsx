@@ -3,13 +3,9 @@ import { FC, useCallback, useContext } from "react";
 import { Menubar } from "primereact/menubar";
 
 import { LayoutContext } from "context/layout";
-import { GlobalContext } from "context/global";
-
-import { DivProps } from "interface/html";
-import { Sections } from "interface/enums";
+import { AnchorProps } from "interface/html";
 
 const Navbar: FC = () => {
-  const { updateCurrentSection } = useContext(GlobalContext)!;
   const { setNavbarHeight } = useContext(LayoutContext)!;
 
   const onNavbarRef = useCallback(
@@ -22,26 +18,10 @@ const Navbar: FC = () => {
 
   const RightLinks = () => (
     <div className="flex justify-end items-center gap-4 pe-3">
-      <NavLink
-        label="Home"
-        icon="pi pi-home"
-        onClick={() => updateCurrentSection(Sections.HOME)}
-      />
-      <NavLink
-        label="About"
-        icon="pi pi-user"
-        onClick={() => updateCurrentSection(Sections.ABOUT)}
-      />
-      <NavLink
-        label="My Work"
-        icon="pi pi-briefcase"
-        onClick={() => updateCurrentSection(Sections.PROJECTS)}
-      />
-      <NavLink
-        label="Contact"
-        icon="pi pi-envelope"
-        onClick={() => updateCurrentSection(Sections.CONTACT)}
-      />
+      <NavLink label="Home" icon="pi pi-home" href="#home" />
+      <NavLink label="About" icon="pi pi-user" href="#about" />
+      <NavLink label="My Work" icon="pi pi-briefcase" href="#projects" />
+      <NavLink label="Contact" icon="pi pi-envelope" href="#contact" />
     </div>
   );
 
@@ -82,24 +62,24 @@ const LeftIcon = () => (
   </div>
 );
 
-type NavLinkProps = DivProps & {
+type NavLinkProps = AnchorProps & {
   label: string;
   icon: string;
 };
 
 const NavLink: FC<NavLinkProps> = ({ label, icon, ...props }) => (
-  <div
+  <a
     {...props}
     className="
-        flex items-center justify-center gap-2
-        font-medium
-        cursor-pointer
-        hover:opacity-60
-      "
+      flex items-center justify-center gap-2
+      font-medium
+      cursor-pointer
+      hover:opacity-60
+    "
   >
     <i className={icon} />
     <span>{label}</span>
-  </div>
+  </a>
 );
 
 export default Navbar;

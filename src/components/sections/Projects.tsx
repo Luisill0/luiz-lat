@@ -1,7 +1,13 @@
 import { FC } from "react";
 
-const ProjectsSection: FC = () => {
-  return <div id="projects-section"></div>;
+import { Section } from "components/sections";
+
+const HomeSection: FC = () => {
+  return (
+    <Section id="projects" className="bg-pink-300">
+      <div>Welcome projects!</div>
+    </Section>
+  );
 };
 
-export default ProjectsSection;
+export default HomeSection;
