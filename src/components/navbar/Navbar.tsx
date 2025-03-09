@@ -33,7 +33,7 @@ const Navbar: FC = () => {
         end={RightLinks}
         pt={{
           root: {
-            className: "py-3 bg-sec border-0 rounded-none",
+            className: "py-3 border-0 rounded-none",
             style: {
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1)",
