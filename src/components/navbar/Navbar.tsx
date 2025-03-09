@@ -1,9 +1,9 @@
 import { FC, useCallback, useContext } from "react";
+import { Link, LinkProps } from "react-scroll";
 
 import { Menubar } from "primereact/menubar";
 
 import { LayoutContext } from "context/layout";
-import { AnchorProps } from "interface/html";
 
 const Navbar: FC = () => {
   const { setNavbarHeight } = useContext(LayoutContext)!;
@@ -18,10 +18,10 @@ const Navbar: FC = () => {
 
   const RightLinks = () => (
     <div className="flex justify-end items-center gap-4 pe-3">
-      <NavLink label="Home" icon="pi pi-home" href="#home" />
-      <NavLink label="About" icon="pi pi-user" href="#about" />
-      <NavLink label="My Work" icon="pi pi-briefcase" href="#projects" />
-      <NavLink label="Contact" icon="pi pi-envelope" href="#contact" />
+      <NavLink label="Home" icon="pi pi-home" to="home" />
+      <NavLink label="About" icon="pi pi-user" to="about" />
+      <NavLink label="My Work" icon="pi pi-briefcase" to="projects" />
+      <NavLink label="Contact" icon="pi pi-envelope" to="contact" />
     </div>
   );
 
@@ -62,24 +62,29 @@ const LeftIcon = () => (
   </div>
 );
 
-type NavLinkProps = AnchorProps & {
+type NavLinkProps = LinkProps & {
   label: string;
   icon: string;
 };
 
-const NavLink: FC<NavLinkProps> = ({ label, icon, ...props }) => (
-  <a
-    {...props}
-    className="
+const NavLink: FC<NavLinkProps> = ({ to, label, icon, ...props }) => {
+  const { navbarHeight } = useContext(LayoutContext)!;
+  return (
+    <Link to={to} duration={400} offset={-navbarHeight + 1} isDynamic smooth>
+      <span
+        {...props}
+        className="
       flex items-center justify-center gap-2
       font-medium
       cursor-pointer
       hover:opacity-60
     "
-  >
-    <i className={icon} />
-    <span>{label}</span>
-  </a>
-);
+      >
+        <i className={icon} />
+        <span>{label}</span>
+      </span>
+    </Link>
+  );
+};
 
 export default Navbar;

@@ -1,10 +1,5 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, ReactNode } from "react";
 
-export type AnchorProps = DetailedHTMLProps<
-  AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
->;
-
 export type DivProps = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
