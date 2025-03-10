@@ -1,11 +1,18 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
+
+import { Carousel } from "primereact/carousel";
 
 import { Gallery } from "assets";
+import { LayoutContext } from "context/layout";
+
 import { Section } from "components/sections";
-import { Carousel } from "primereact/carousel";
 import { Anchor } from "components/html/Anchor";
+import { BreakpointHeight } from "interface/enum/Breakpoint";
 
 const HomeSection: FC = () => {
+  const { currentBreakpoint } = useContext(LayoutContext)!;
+  const { height: breakpointHeight } = currentBreakpoint;
+
   return (
     <Section id="about">
       <div id="title" className="px-5 py-3 w-3/4 select-none">
@@ -13,7 +20,13 @@ const HomeSection: FC = () => {
           className={`
             pb-2 font-extralight
             border-b-4 border-chocolate-cosmos
-            lg:text-7xl text-5xl
+            ${breakpointHeight <= BreakpointHeight.SM && "text-5xl"}
+            ${
+              breakpointHeight > BreakpointHeight.SM &&
+              breakpointHeight < BreakpointHeight.LG &&
+              "text-6xl"
+            }
+            ${breakpointHeight >= BreakpointHeight.LG && "text-7xl"}
           `}
         >
           About me
@@ -21,46 +34,68 @@ const HomeSection: FC = () => {
       </div>
       <div id="content" className="grid grid-cols-3 px-5 pt-3">
         <div id="left" className="col-span-2">
-          <div
-            className={`
-              w-[90%]
-              text-2xl leading-relaxed
-          `}
-          >
-            <p>
-              My name is{" "}
-              <span className="font-bold text-chocolate-cosmos">
-                Luis Naranjo
-              </span>
-              . I am a young Mexican developer who loves to create things. In
-              2025, I graduated with double degrees in Computer Science from
-              <Anchor href="https://www.uaslp.mx">UASLP MX</Anchor> and
-              <Anchor href="https://www.cityu.edu/">CityU Seattle</Anchor>.
-              Right now I am working on web and cloud development, but I have
-              experience with mobile applications, cybersecurity, data science
-              and machine learning!
-            </p>
-            <p className="pt-5">
-              I have been working on web applications and cloud since 2022,
-              having experience with many languages, frameworks and platforms,
-              especially the more popular ones.
-            </p>
-            <p className="pt-5">
-              I am very passionate about music, cinema, photography and
-              travelling, and I approach all of my projects with the same
-              enthusiasm! Whenever I'm not working I'm probably{" "}
-              <Anchor href="https://letterboxd.com/luisill0">
-                ranting about movies
-              </Anchor>
-              .
-            </p>
-          </div>
+          <Description />
         </div>
         <div id="right">
           <PhotoCarousel />
         </div>
       </div>
     </Section>
+  );
+};
+
+const Description: FC = () => {
+  const { currentBreakpoint } = useContext(LayoutContext)!;
+  const { height: breakpointHeight } = currentBreakpoint;
+
+  return (
+    <div
+      className={`
+        w-[90%] leading-relaxed
+        ${breakpointHeight <= BreakpointHeight.XS && "text-lg"}
+        ${
+          breakpointHeight > BreakpointHeight.XS &&
+          breakpointHeight <= BreakpointHeight.SM &&
+          "text-xl"
+        }
+        ${
+          breakpointHeight > BreakpointHeight.SM &&
+          breakpointHeight <= BreakpointHeight.MD &&
+          "text-[1.35rem]"
+        }
+        ${
+          breakpointHeight > BreakpointHeight.MD &&
+          breakpointHeight < BreakpointHeight.XL &&
+          "text-2xl"
+        }
+        ${breakpointHeight >= BreakpointHeight.XL && "text-[1.65rem]"}
+      `}
+    >
+      <p>
+        My name is{" "}
+        <span className="font-bold text-chocolate-cosmos">Luis Naranjo</span>. I
+        am a young Mexican developer who loves to create things. In 2025, I
+        graduated with double degrees in Computer Science from
+        <Anchor href="https://www.uaslp.mx">UASLP MX</Anchor> and
+        <Anchor href="https://www.cityu.edu/">CityU Seattle</Anchor>. Right now
+        I am working on web and cloud development, but I have experience with
+        mobile applications, cybersecurity, data science and machine learning!
+      </p>
+      <p className="pt-5">
+        I have been working on web applications and cloud since 2022, having
+        experience with many languages, frameworks and platforms, especially the
+        more popular ones.
+      </p>
+      <p className="pt-5">
+        I am very passionate about music, cinema, photography and travelling,
+        and I approach all of my projects with the same enthusiasm! Whenever I'm
+        not working I'm probably{" "}
+        <Anchor href="https://letterboxd.com/luisill0">
+          ranting about movies
+        </Anchor>
+        .
+      </p>
+    </div>
   );
 };
 
