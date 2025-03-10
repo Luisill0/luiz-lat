@@ -12,7 +12,7 @@ const Section: FC<SectionProps> = ({ children, ...props }) => {
   return (
     <div
       {...props}
-      className={`relative box-border -z-10 ${className}`}
+      className={`relative box-border ${className ?? ""}`}
       style={{
         ...style,
         minHeight: window.innerHeight,

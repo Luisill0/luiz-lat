@@ -55,11 +55,11 @@ const LoadingScreen: ComponentWithChildren = ({ children }) => {
       <div
         className={`
             absolute top-0 left-0
-            bg-sec
+            bg-magnolia
             flex flex-col items-center justify-center
             overflow-hidden
             h-[100vh] w-[100vw]
-            z-20
+            ${isLoading && "z-20"}
             ${!isLoading && "hidden"}
         `}
       >

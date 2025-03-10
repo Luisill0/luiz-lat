@@ -8,9 +8,29 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+@layer primereact {
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: var(--color-violet-blue) !important;
+  }
+
+  .p-carousel-indicator > button {
+    background-color: var(--color-gray-400) !important;
+  }
+
+  .p-carousel-indicator .p-link {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100% !important;
+  }
+}
+
 @theme {
-  --color-pri: #450920;
-  --color-sec: #fffeff;
+  --color-magnolia: #fbf0ff;
+  --color-chocolate-cosmos: #450920;
+  --color-lapis-lazuli: #48639c;
+  --color-violet-blue: #4c4c9d;
+  --color-pomp-and-power: #976391;
+  --color-dark-purple: #0b0024;
 }
 
 html {
@@ -21,7 +41,7 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: var(--color-sec);
+  background-color: var(--magnolia);
 }
 
 :root {

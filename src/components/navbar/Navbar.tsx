@@ -26,7 +26,7 @@ const Navbar: FC = () => {
   );
 
   return (
-    <div ref={onNavbarRef} className="select-none fixed top-0 w-full">
+    <div ref={onNavbarRef} className="z-10 select-none fixed top-0 w-full">
       <Menubar
         id="custom-navbar"
         start={LeftIcon}
@@ -48,9 +48,9 @@ const Navbar: FC = () => {
 const LeftIcon = () => (
   <div
     className="
-        flex items-center
-        font-mono text-3xl
-        cursor-default
+      flex items-center
+      font-mono text-3xl
+      cursor-default
     "
   >
     <img
@@ -74,11 +74,11 @@ const NavLink: FC<NavLinkProps> = ({ to, label, icon, ...props }) => {
       <span
         {...props}
         className="
-      flex items-center justify-center gap-2
-      font-medium
-      cursor-pointer
-      hover:opacity-60
-    "
+          flex items-center justify-center gap-2
+          font-medium
+          cursor-pointer
+          hover:opacity-60
+        "
       >
         <i className={icon} />
         <span>{label}</span>
