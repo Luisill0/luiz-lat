@@ -3,10 +3,13 @@ import { FC, PropsWithChildren, useContext } from "react";
 import { LayoutContext } from "context/layout";
 import { DivProps } from "interface/html";
 
-type SectionProps = DivProps & PropsWithChildren;
+type SectionProps = DivProps &
+  PropsWithChildren & {
+    head?: boolean;
+  };
 
-const Section: FC<SectionProps> = ({ children, ...props }) => {
-  const { window } = useContext(LayoutContext)!;
+const Section: FC<SectionProps> = ({ children, head = false, ...props }) => {
+  const { window, navbarHeight } = useContext(LayoutContext)!;
   const { style, className } = props;
 
   return (
@@ -15,7 +18,9 @@ const Section: FC<SectionProps> = ({ children, ...props }) => {
       className={`relative box-border ${className ?? ""}`}
       style={{
         ...style,
-        minHeight: window.innerHeight,
+        minHeight: head
+          ? window.innerHeight
+          : window.innerHeight - navbarHeight + 1,
       }}
     >
       {children}
