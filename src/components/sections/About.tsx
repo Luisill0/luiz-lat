@@ -5,33 +5,14 @@ import { Carousel } from "primereact/carousel";
 import { Gallery } from "assets";
 import { LayoutContext } from "context/layout";
 
-import { Section } from "components/sections";
+import { Section, SectionTitle } from "components/sections";
 import { Anchor } from "components/html/Anchor";
 import { BreakpointHeight } from "interface/enum/Breakpoint";
 
-const HomeSection: FC = () => {
-  const { currentBreakpoint } = useContext(LayoutContext)!;
-  const { height: breakpointHeight } = currentBreakpoint;
-
+const AboutSection: FC = () => {
   return (
     <Section id="about">
-      <div id="title" className="px-5 py-3 w-3/4 select-none">
-        <p
-          className={`
-            pb-2 font-extralight
-            border-b-4 border-chocolate-cosmos
-            ${breakpointHeight <= BreakpointHeight.SM && "text-5xl"}
-            ${
-              breakpointHeight > BreakpointHeight.SM &&
-              breakpointHeight < BreakpointHeight.LG &&
-              "text-6xl"
-            }
-            ${breakpointHeight >= BreakpointHeight.LG && "text-7xl"}
-          `}
-        >
-          About me
-        </p>
-      </div>
+      <SectionTitle title="About me" />
       <div id="content" className="grid grid-cols-3 px-5 pt-3">
         <div id="left" className="col-span-2">
           <Description />
@@ -137,4 +118,4 @@ const PhotoCarousel: FC = () => {
   );
 };
 
-export default HomeSection;
+export default AboutSection;
