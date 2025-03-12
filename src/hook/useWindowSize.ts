@@ -1,5 +1,6 @@
 import { WindowSize } from "interface/layout";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useWindowListener } from "./useWindowListener";
 
 const getWindowSize = (): WindowSize => {
   return {
@@ -8,16 +9,10 @@ const getWindowSize = (): WindowSize => {
   };
 };
 
-export const useWindow = () => {
+export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>(getWindowSize());
 
-  useEffect(() => {
-    const onWindowResize = () => {
-      setWindowSize(getWindowSize());
-    };
-    window.addEventListener("resize", onWindowResize);
-    return () => window.removeEventListener("resize", onWindowResize);
-  }, []);
+  useWindowListener("resize", () => setWindowSize(getWindowSize()));
 
   return {
     innerHeight: windowSize.innerHeight,
