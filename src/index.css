@@ -22,6 +22,24 @@
     height: 1rem;
     border-radius: 100% !important;
   }
+
+  .p-inputtext {
+    scrollbar-width: thin;
+  }
+
+  .p-dialog-content {
+    border-radius: 6px;
+    margin: 0px auto;
+  }
+
+  .p-inputtext.p-disabled {
+    border-color: black;
+    background-color: var(--gray-300);
+  }
+
+  .p-button.p-disabled {
+    border: 2px solid var(--purple-800);
+  }
 }
 
 @theme {
