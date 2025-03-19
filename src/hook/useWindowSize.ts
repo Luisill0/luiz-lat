@@ -1,6 +1,6 @@
 import { WindowSize } from "interface/layout";
 import { useState } from "react";
-import { useWindowListener } from "./useWindowListener";
+import { useWindowListener } from "./useListener";
 
 const getWindowSize = (): WindowSize => {
   return {
