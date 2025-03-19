@@ -9,3 +9,8 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+type ImportedImage = {
+  default: string;
+  "Symbol(Symbol.toStringTag)": string;
+};
