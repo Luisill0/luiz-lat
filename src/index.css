@@ -9,6 +9,14 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @layer primereact {
+  #custom-navbar.p-menubar.mobile .p-menubar-start {
+    width: 100% !important;
+  }
+
+  #mobile-menu .p-sidebar-header {
+    display: none !important;
+  }
+
   .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
     background-color: var(--color-violet-blue) !important;
   }
@@ -68,6 +76,7 @@ body {
   font-weight: 400;
 
   scrollbar-width: thin;
+  overflow-x: hidden;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
