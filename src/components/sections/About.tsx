@@ -90,7 +90,8 @@ const PhotoTemplate = ({ src, alt }: PhotoTemplateProps) => (
     <img
       src={src}
       alt={alt}
-      className="max-h-[65vh] border-2 border-violet-blue"
+      className="max-h-[65vh] border-2 border-violet-blue select-none"
+      draggable={false}
     />
   </div>
 );

@@ -60,7 +60,7 @@ const AnimatedText = () => {
       {animationsFinished > 0 && (
         <TypeAnimation
           aria-hidden
-          className="font-bold text-purple-700"
+          className="font-bold text-violet-blue"
           sequence={["Luis", () => onAnimationFinished(500)]}
           cursor={false}
         />
@@ -77,7 +77,7 @@ const AnimatedText = () => {
         {animationsFinished > 2 && (
           <TypeAnimation
             aria-hidden
-            className="font-bold text-purple-700"
+            className="font-bold text-violet-blue"
             sequence={[
               "a Full-Stack Developer",
               500,
