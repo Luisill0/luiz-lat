@@ -7,10 +7,3 @@ export const Companies: Array<ImportedImage> = Object.values(
     query: "?url",
   })
 );
-
-export const Gallery: Array<ImportedImage> = Object.values(
-  import.meta.glob("./gallery/*.webp", {
-    eager: true,
-    query: "?url",
-  })
-);

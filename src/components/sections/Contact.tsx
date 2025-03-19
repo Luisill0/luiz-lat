@@ -13,7 +13,7 @@ import { ContactFormValues } from "interface/contact";
 import { BreakpointHeight } from "interface/enum/Breakpoint";
 
 import { LayoutContext } from "context/layout";
-import { useWindowListener } from "hook/useWindowListener";
+import { useWindowListener } from "hook/useListener";
 import { useLocalStorage } from "usehooks-ts";
 
 type MessageStatus = {

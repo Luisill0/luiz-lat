@@ -300,6 +300,9 @@ const CSArea: ComponentWithChildren<CSAreaProps> = ({
   description,
   children,
 }) => {
+  const { currentBreakpoint } = useContext(LayoutContext)!;
+  const { height: breakpointHeight } = currentBreakpoint;
+
   return (
     <div id="area" className="py-5 rounded-2xl text-center bg-magnolia w-1/3">
       <div className="flex flex-col items-center justify-center">
@@ -308,7 +311,15 @@ const CSArea: ComponentWithChildren<CSAreaProps> = ({
         </div>
         <p className="mt-2 text-2xl font-semibold">{title}</p>
       </div>
-      <div className="mt-5 mx-auto w-[80%]">{description}</div>
+      <div
+        className={`
+          mx-auto w-[80%]
+          ${breakpointHeight < BreakpointHeight.MD && "mt-2 text-sm"}
+          ${breakpointHeight >= BreakpointHeight.MD && "mt-5"}
+        `}
+      >
+        {description}
+      </div>
       {children}
     </div>
   );
@@ -329,27 +340,46 @@ type MappedIconsProps = {
   icons: Array<ImageLink>;
 };
 
-const MappedIcons: FC<MappedIconsProps> = ({ icons }) => (
-  <div className="pt-3 flex gap-2 items-center justify-center">
-    {icons.map((icon, index) => (
-      <a
-        href={icon.href}
-        target="_blank"
-        rel="noreferrer"
-        className="hover:brightness-90 hover:opacity-90"
-      >
-        <img
+const MappedIcons: FC<MappedIconsProps> = ({ icons }) => {
+  const { currentBreakpoint } = useContext(LayoutContext)!;
+  const { height: breakpointHeight } = currentBreakpoint;
+
+  const getIconHeight = useCallback(
+    () =>
+      breakpointHeight > BreakpointHeight.LG
+        ? 60
+        : breakpointHeight <= BreakpointHeight.LG &&
+          breakpointHeight > BreakpointHeight.MD
+        ? 45
+        : breakpointHeight <= BreakpointHeight.MD &&
+          breakpointHeight > BreakpointHeight.SM
+        ? 35
+        : 30,
+    [breakpointHeight]
+  );
+
+  return (
+    <div className="pt-3 flex gap-2 items-center justify-center">
+      {icons.map((icon, index) => (
+        <a
           key={index}
-          src={icon.src}
-          className="select-none"
-          alt="Application icon"
-          width={45}
-          draggable={false}
-        />
-      </a>
-    ))}
-  </div>
-);
+          href={icon.href}
+          target="_blank"
+          rel="noreferrer"
+          className="hover:brightness-90 hover:opacity-90"
+        >
+          <img
+            src={icon.src}
+            className="select-none"
+            alt="Application icon"
+            width={getIconHeight()}
+            draggable={false}
+          />
+        </a>
+      ))}
+    </div>
+  );
+};
 
 type ProjectShowcaseProps = {
   title: string;

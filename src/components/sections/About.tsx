@@ -1,12 +1,9 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 
-import { Carousel } from "primereact/carousel";
-
-import { Gallery } from "assets";
-import { LayoutContext } from "context/layout";
-
+import { default as Luis } from "assets/gallery/luis.webp";
 import { Section, SectionTitle } from "components/sections";
 import { Anchor } from "components/html/Anchor";
+import { LayoutContext } from "context/layout";
 import { BreakpointHeight } from "interface/enum/Breakpoint";
 
 const AboutSection: FC = () => {
@@ -17,8 +14,13 @@ const AboutSection: FC = () => {
         <div id="left" className="col-span-2">
           <Description />
         </div>
-        <div id="right">
-          <PhotoCarousel />
+        <div id="right" className="flex justify-center">
+          <img
+            src={Luis}
+            alt={"Decorative. Image from gallery"}
+            className="max-h-[65vh] border-4 border-violet-blue select-none"
+            draggable={false}
+          />
         </div>
       </div>
     </Section>
@@ -76,45 +78,6 @@ const Description: FC = () => {
         </Anchor>
         .
       </p>
-    </div>
-  );
-};
-
-type PhotoTemplateProps = {
-  src: string;
-  alt?: string;
-};
-
-const PhotoTemplate = ({ src, alt }: PhotoTemplateProps) => (
-  <div className="pb-3 w-fit mx-auto relative">
-    <img
-      src={src}
-      alt={alt}
-      className="max-h-[65vh] border-2 border-violet-blue select-none"
-      draggable={false}
-    />
-  </div>
-);
-
-const PhotoCarousel: FC = () => {
-  const [images] = useState<Array<PhotoTemplateProps>>(
-    Gallery.map((image, index) => ({
-      src: image.default,
-      alt: `Photo from gallery #${index + 1}`,
-    }))
-  );
-
-  return (
-    <div className="card">
-      <Carousel
-        value={images}
-        numVisible={1}
-        numScroll={1}
-        itemTemplate={PhotoTemplate}
-        showNavigators
-        showIndicators
-        circular
-      />
     </div>
   );
 };

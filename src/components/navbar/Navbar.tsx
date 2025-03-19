@@ -1,20 +1,21 @@
-import { FC, useCallback, useContext } from "react";
+import { FC, useCallback, useContext, useRef } from "react";
 import { Link, LinkProps } from "react-scroll";
 
 import { Menubar } from "primereact/menubar";
 
 import { LayoutContext } from "context/layout";
+import { useDocumentListener } from "hook/useListener";
 
 const Navbar: FC = () => {
   const { setNavbarHeight } = useContext(LayoutContext)!;
 
-  const onNavbarRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (!node) return;
-      setNavbarHeight(node.clientHeight);
-    },
-    [setNavbarHeight]
-  );
+  const navbarRef = useRef<HTMLDivElement | null>(null);
+
+  const udpateNavbar = useCallback(() => {
+    setNavbarHeight(navbarRef.current?.clientHeight ?? 0);
+  }, [setNavbarHeight]);
+
+  useDocumentListener("loading-finished", udpateNavbar);
 
   const RightLinks = () => (
     <div className="flex justify-end items-center gap-4 pe-3">
@@ -26,7 +27,7 @@ const Navbar: FC = () => {
   );
 
   return (
-    <div ref={onNavbarRef} className="z-10 select-none fixed top-0 w-full">
+    <div ref={navbarRef} className="z-10 select-none fixed top-0 w-full">
       <Menubar
         id="custom-navbar"
         start={LeftIcon}
