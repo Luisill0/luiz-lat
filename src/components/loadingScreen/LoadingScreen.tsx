@@ -1,14 +1,17 @@
-import { Reducer, useEffect, useReducer, useRef, useState } from "react";
+import { Reducer, useEffect, useReducer, useRef } from "react";
 
 import { DinoWalking } from "assets";
+import { useCustomEvent } from "hook/useListener";
+import { ComponentWithChildren } from "interface/html";
 import { generateRandomInterval } from "utils/random";
 
 import ProgressBar from "./Progressbar";
-import { ComponentWithChildren } from "interface/html";
 
 type ReducerState = {
   timeStarted: number;
   timeElapsed: number;
+  maxAge: number;
+  loading: boolean;
 };
 
 type ReducerAction = {
@@ -20,19 +23,20 @@ const reducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
     return {
       ...state,
       timeElapsed: Date.now() - state.timeStarted,
+      loading: state.timeElapsed < state.maxAge,
     };
   }
   throw Error("Unknown action");
 };
 
 const LoadingScreen: ComponentWithChildren = ({ children }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const [maxAge] = useState(generateRandomInterval(4_000, 8_000));
+  const { dispatchCustomEvent } = useCustomEvent();
 
   const [state, dispatch] = useReducer(reducer, {
     timeStarted: Date.now(),
     timeElapsed: 0,
+    maxAge: generateRandomInterval(4_000, 8_000),
+    loading: true,
   });
 
   const gifRef = useRef<HTMLImageElement | null>(null);
@@ -41,14 +45,13 @@ const LoadingScreen: ComponentWithChildren = ({ children }) => {
     const interval = setInterval(() => {
       dispatch({ type: "update_time" });
     }, generateRandomInterval(10, 300));
-    return () => clearInterval(interval);
-  }, []);
 
-  useEffect(() => {
-    if (state.timeElapsed > maxAge) {
-      setIsLoading(false);
+    if (!state.loading) {
+      clearInterval(interval);
+      setTimeout(() => dispatchCustomEvent("loading-finished"), 400);
     }
-  }, [maxAge, state.timeElapsed]);
+    return () => clearInterval(interval);
+  });
 
   return (
     <>
@@ -59,8 +62,8 @@ const LoadingScreen: ComponentWithChildren = ({ children }) => {
             flex flex-col items-center justify-center
             overflow-hidden
             h-[100vh] w-[100vw]
-            ${isLoading && "z-20"}
-            ${!isLoading && "hidden"}
+            ${state.loading && "z-20"}
+            ${!state.loading && "hidden"}
         `}
       >
         <div className="relative flex justify-center">
@@ -86,9 +89,9 @@ const LoadingScreen: ComponentWithChildren = ({ children }) => {
             &copy;
           </a>
         </div>
-        <ProgressBar timeElapsed={state.timeElapsed} maxAge={maxAge} />
+        <ProgressBar timeElapsed={state.timeElapsed} maxAge={state.maxAge} />
       </div>
-      {!isLoading && children}
+      {!state.loading && children}
     </>
   );
 };
