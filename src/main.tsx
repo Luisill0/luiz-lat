@@ -5,6 +5,7 @@ import { PrimeReactProvider } from "primereact/api";
 
 import emailjs from "@emailjs/browser";
 
+import { Footer } from "components/footer";
 import { LoadingScreen } from "components/loadingScreen";
 import { Navbar } from "components/navbar";
 import { ValidateEnv } from "components/wrappers";
@@ -32,6 +33,7 @@ createRoot(document.getElementById("root")!).render(
           <LoadingScreen>
             <Home />
           </LoadingScreen>
+          <Footer />
         </PrimeReactProvider>
       </LayoutProvider>
     </ValidateEnv>
