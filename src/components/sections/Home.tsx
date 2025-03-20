@@ -4,6 +4,7 @@ import { TypeAnimation } from "react-type-animation";
 import { HeroMobile } from "assets";
 import { Section } from "components/sections";
 import { LayoutContext } from "context/layout";
+import { useDocumentListener } from "hook/useListener";
 
 const HomeSection: FC = () => {
   const { mobile } = useContext(LayoutContext)!;
@@ -22,6 +23,11 @@ const HomeSection: FC = () => {
 
 const HomeDesktop = () => {
   const { navbarHeight } = useContext(LayoutContext)!;
+  const [loading, setLoading] = useState(true);
+
+  const onLoadingFinished = () => setLoading(false);
+
+  useDocumentListener("loading-finished", onLoadingFinished);
 
   return (
     <div
@@ -33,7 +39,7 @@ const HomeDesktop = () => {
         "
       style={{ paddingTop: navbarHeight }}
     >
-      <AnimatedText />
+      {!loading && <AnimatedText />}
     </div>
   );
 };
