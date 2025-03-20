@@ -1,4 +1,4 @@
-import { Reducer, useEffect, useReducer, useRef } from "react";
+import { Reducer, useContext, useEffect, useReducer, useRef } from "react";
 
 import { DinoWalking } from "assets";
 import { useCustomEvent } from "hook/useListener";
@@ -6,6 +6,7 @@ import { ComponentWithChildren } from "interface/html";
 import { generateRandomInterval } from "utils/random";
 
 import ProgressBar from "./Progressbar";
+import { LayoutContext } from "context/layout";
 
 type ReducerState = {
   timeStarted: number;
@@ -30,6 +31,7 @@ const reducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
 };
 
 const LoadingScreen: ComponentWithChildren = ({ children }) => {
+  const { mobile } = useContext(LayoutContext)!;
   const { dispatchCustomEvent } = useCustomEvent();
 
   const [state, dispatch] = useReducer(reducer, {
@@ -70,10 +72,9 @@ const LoadingScreen: ComponentWithChildren = ({ children }) => {
           <img
             ref={gifRef}
             src={DinoWalking}
-            width={200}
             style={{
               transform: "scaleX(-1)",
-              maxWidth: "30vw",
+              width: `${mobile ? "55vw" : "18vw"}`,
             }}
           />
           <a

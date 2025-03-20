@@ -1,4 +1,5 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
+import { LayoutContext } from "context/layout";
 
 type ProgressBarProps = {
   maxAge: number;
@@ -6,6 +7,7 @@ type ProgressBarProps = {
 };
 
 const ProgressBar: FC<ProgressBarProps> = ({ maxAge, timeElapsed }) => {
+  const { mobile } = useContext(LayoutContext)!;
   const [percentage, setPercentage] = useState(0);
   const [progessWidth, setProgressWitdh] = useState(0);
 
@@ -29,11 +31,14 @@ const ProgressBar: FC<ProgressBarProps> = ({ maxAge, timeElapsed }) => {
       ref={barRef}
       className="
         relative
-        w-1/2 h-[3rem]
+        h-[3rem]
         border-1 border-chocolate-cosmos
         rounded-3xl
         text-center text-chocolate-cosmos
       "
+      style={{
+        width: `${mobile ? "80%" : "50%"}`,
+      }}
     >
       <span
         className="
