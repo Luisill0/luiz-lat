@@ -70,12 +70,17 @@ body {
   background-color: var(--magnolia);
 }
 
+:root::-webkit-scrollbar {
+  display: none;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  scrollbar-width: thin;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   overflow-x: hidden;
 
   font-synthesis: none;

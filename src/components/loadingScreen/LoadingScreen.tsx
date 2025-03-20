@@ -30,7 +30,7 @@ const reducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   throw Error("Unknown action");
 };
 
-const LoadingScreen: ComponentWithChildren = ({ children }) => {
+const LoadingScreen: ComponentWithChildren = () => {
   const { mobile } = useContext(LayoutContext)!;
   const { dispatchCustomEvent } = useCustomEvent();
 
@@ -92,7 +92,6 @@ const LoadingScreen: ComponentWithChildren = ({ children }) => {
         </div>
         <ProgressBar timeElapsed={state.timeElapsed} maxAge={state.maxAge} />
       </div>
-      {!state.loading && children}
     </>
   );
 };
