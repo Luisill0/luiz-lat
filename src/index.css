@@ -115,3 +115,7 @@ body {
   min-width: 0;
   padding-left: var(--slide-spacing);
 }
+
+#contact #form-bg {
+  transition: all 500ms;
+}
