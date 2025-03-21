@@ -71,15 +71,23 @@ const ProjectsSection: FC = () => {
               title="Other Areas"
               description="Some of my other areas of expertise include"
             >
-              <SubArea title="Artificial Intelligence">
-                <p>Data Science</p>
-                <p>Computer Vision</p>
-                <p>Machine Learning</p>
-              </SubArea>
-              <SubArea title="Cybersecurity">
-                <p>Networks</p>
-                <p>Pentesting</p>
-              </SubArea>
+              <div className="grid grid-cols-2">
+                <SubArea title="Artificial Intelligence">
+                  <p>Data Science</p>
+                  <p>Computer Vision</p>
+                  <p>Machine Learning</p>
+                </SubArea>
+                <SubArea title="Cybersecurity">
+                  <p>Networks</p>
+                  <p>Pentesting</p>
+                </SubArea>
+                <SubArea className="col-span-2" title="DevOps">
+                  <p>CI/CD Pipelines</p>
+                  <p>Docker / YAML</p>
+                  <p>Linux</p>
+                  <p>VPC</p>
+                </SubArea>
+              </div>
             </CSArea>
           </AreaBackground>
         </div>
@@ -341,10 +349,15 @@ const CSArea: ComponentWithChildren<CSAreaProps> = ({
 
 type SubAreaProps = {
   title: string;
+  className?: string;
 };
 
-const SubArea: ComponentWithChildren<SubAreaProps> = ({ title, children }) => (
-  <div className="mt-5 pt-2">
+const SubArea: ComponentWithChildren<SubAreaProps> = ({
+  title,
+  className,
+  children,
+}) => (
+  <div className={`mt-5 pt-2 ${className ?? ""}`}>
     <p className="text-lg text-violet-blue font-bold max-w-[75%] mx-auto">
       {title}
     </p>
