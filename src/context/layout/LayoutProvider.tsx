@@ -11,7 +11,7 @@ const LayoutProvider: ComponentWithChildren = ({ children }) => {
   const windowSize = useWindowSize();
   const breakpoints = useBreakpoints(windowSize);
 
-  const [navbarHeight, setNavbarHeight] = useState<number>(0);
+  const [navbarHeight, setNavbarHeight] = useState<number>(64);
 
   const getMobile = useCallback(
     () => windowSize.innerHeight > windowSize.innerWidth,

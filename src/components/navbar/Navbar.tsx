@@ -3,25 +3,28 @@ import {
   MouseEventHandler,
   useCallback,
   useContext,
+  useRef,
   useState,
 } from "react";
 import { Link, LinkProps } from "react-scroll";
 
 import { Menubar } from "primereact/menubar";
+import { Sidebar } from "primereact/sidebar";
 
 import { LayoutContext } from "context/layout";
+import { useDocumentListener } from "hook/useListener";
 import { BreakpointHeight, BreakpointWidth } from "interface/enum/Breakpoint";
-import { Sidebar } from "primereact/sidebar";
 
 const Navbar: FC = () => {
   const { mobile, setNavbarHeight } = useContext(LayoutContext)!;
+  const navbarRef = useRef<HTMLDivElement | null>(null);
 
   const udpateNavbar = useCallback(
-    (node: HTMLDivElement | null) => {
-      setNavbarHeight(node?.clientHeight ?? 0);
-    },
+    () => setNavbarHeight(navbarRef?.current?.clientHeight ?? 0),
     [setNavbarHeight]
   );
+
+  useDocumentListener("loading-finished", udpateNavbar);
 
   const CurrentNavbar = useCallback(
     () => (mobile ? <NavbarMobile /> : <NavbarDesktop />),
@@ -30,7 +33,7 @@ const Navbar: FC = () => {
 
   return (
     <>
-      <div ref={udpateNavbar} className="fixed top-0 z-20 w-full select-none">
+      <div ref={navbarRef} className="fixed top-0 z-20 w-full select-none">
         {import.meta.env.DEV && <LayoutInfo />}
         <CurrentNavbar />
       </div>
