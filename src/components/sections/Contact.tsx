@@ -83,23 +83,25 @@ const ContactSection: FC = () => {
       <SuccessDialog visible={visible} onHide={onHide} />
       <SectionTitle title="Contact me" />
       <div
+        id="form-bg"
         className={`
           relative
           flex justify-center items-center
           mx-5 mt-3 py-8
           rounded-xl
           bg-violet-blue
-          ${breakpointHeight < BreakpointHeight.XL && "max-h-[72vh]"}
-          ${breakpointHeight >= BreakpointHeight.XL && "min-h-[75vh]"}
+          h-[75vh]
+          ${breakpointHeight < BreakpointHeight.XL && "md:max-h-[72vh]"}
+          ${breakpointHeight >= BreakpointHeight.XL && "md:min-h-[75vh]"}
         `}
       >
         <div
           className="
-            py-3 px-8 w-1/2 rounded-2xl
+            py-3 px-8 w-4/5 md:w-1/2 rounded-2xl
             bg-magnolia
           "
         >
-          <p className="text-center font-sans text-xl">
+          <p className="text-center font-sans md:text-xl">
             Ask any question, I'll get back to you as soon as I can!
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -130,7 +132,7 @@ const ContactSection: FC = () => {
             />
             <div className="text-center mt-5 mb-3">
               <Button
-                className="relative w-3/4"
+                className="relative w-full md:w-3/4"
                 type="submit"
                 icon="pi pi-envelope"
                 label={getIsMessageDisabled() ? "Message Sent" : "Send Message"}

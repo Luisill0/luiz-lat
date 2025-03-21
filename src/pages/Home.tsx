@@ -9,7 +9,7 @@ import {
 
 const Home: FC = () => {
   return (
-    <div>
+    <div className="relative z-[10]">
       <HomeSection />
       <AboutSection />
       <ProjectsSection />

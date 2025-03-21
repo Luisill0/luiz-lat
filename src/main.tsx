@@ -1,18 +1,21 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { PrimeReactProvider } from "primereact/api";
 
 import emailjs from "@emailjs/browser";
 
+import { Footer } from "components/footer";
 import { LoadingScreen } from "components/loadingScreen";
 import { Navbar } from "components/navbar";
 import { ValidateEnv } from "components/wrappers";
 
 import { LayoutProvider } from "context/layout";
-import { Home } from "pages";
+
+const Home = lazy(() => import("pages/Home"));
 
 import "index.css";
+import LoadingWrapper from "components/wrappers/LoadingWrapper";
 
 emailjs.init({
   publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
@@ -28,10 +31,12 @@ createRoot(document.getElementById("root")!).render(
     <ValidateEnv>
       <LayoutProvider>
         <PrimeReactProvider>
-          <Navbar />
-          <LoadingScreen>
+          <LoadingWrapper>
+            <Navbar />
+            <LoadingScreen />
             <Home />
-          </LoadingScreen>
+            <Footer />
+          </LoadingWrapper>
         </PrimeReactProvider>
       </LayoutProvider>
     </ValidateEnv>

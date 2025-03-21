@@ -19,17 +19,20 @@ const TextAreaInput: FC<TextAreaInputProps> = ({
   className = "",
   ...props
 }) => {
-  const { currentBreakpoint } = useContext(LayoutContext)!;
+  const { currentBreakpoint, mobile } = useContext(LayoutContext)!;
   const { height: breakpointHeight } = currentBreakpoint;
 
   const getRows: () => number = useCallback(() => {
-    return breakpointHeight < BreakpointHeight.MD
-      ? 2
-      : breakpointHeight >= BreakpointHeight.MD &&
-        breakpointHeight < BreakpointHeight.LG
-      ? 3
-      : 4;
-  }, [breakpointHeight]);
+    const desktopRows =
+      breakpointHeight < BreakpointHeight.MD
+        ? 2
+        : breakpointHeight >= BreakpointHeight.MD &&
+          breakpointHeight < BreakpointHeight.LG
+        ? 3
+        : 4;
+
+    return mobile ? 3 : desktopRows;
+  }, [breakpointHeight, mobile]);
 
   return (
     <Controller
@@ -42,7 +45,8 @@ const TextAreaInput: FC<TextAreaInputProps> = ({
           className={`
           flex flex-col
           ${className}
-          ${breakpointHeight < BreakpointHeight.MD && "text-xs"}
+          "text-xs"
+          ${breakpointHeight < BreakpointHeight.MD && "md:text-xs"}
         `}
         >
           <label htmlFor={name}>{label}:</label>
@@ -50,7 +54,7 @@ const TextAreaInput: FC<TextAreaInputProps> = ({
             id={field.name}
             className={`
               resize-none
-              ${breakpointHeight < BreakpointHeight.LG && "text-sm"}  
+              ${breakpointHeight < BreakpointHeight.LG && "md:text-sm"}  
             `}
             invalid={invalid}
             variant={props.disabled ? "filled" : "outlined"}
@@ -58,7 +62,7 @@ const TextAreaInput: FC<TextAreaInputProps> = ({
             {...field}
           />
           {errors[field.name] && (
-            <span className="text-red-900 text-sm">
+            <span className="text-red-900 text-xs md:text-sm">
               {errors[field.name]?.message}
             </span>
           )}

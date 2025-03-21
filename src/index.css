@@ -9,6 +9,14 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @layer primereact {
+  #custom-navbar.p-menubar.mobile .p-menubar-start {
+    width: 100% !important;
+  }
+
+  #mobile-menu .p-sidebar-header {
+    display: none !important;
+  }
+
   .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
     background-color: var(--color-violet-blue) !important;
   }
@@ -62,12 +70,18 @@ body {
   background-color: var(--magnolia);
 }
 
+:root::-webkit-scrollbar {
+  display: none;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  scrollbar-width: thin;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -79,4 +93,29 @@ body {
   background: linear-gradient(rgb(201, 60, 241) 0%, rgb(97, 10, 85) 90%),
     linear-gradient(to right, rgb(111, 45, 129) 0%, rgb(255, 193, 216) 90%);
   background-blend-mode: screen, difference, lighten;
+}
+
+.embla {
+  max-width: 95vw;
+  margin: auto;
+  user-select: none;
+  --slide-spacing: 1rem;
+  --slide-size: 35%;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+
+#contact #form-bg {
+  transition: all 500ms;
 }

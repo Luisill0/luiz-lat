@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useCallback, useContext } from "react";
 
 import { LayoutContext } from "context/layout";
 
@@ -9,21 +9,24 @@ type SectionTitleProps = DivProps & {
   title: string;
 };
 
-const SectionTitle: FC<SectionTitleProps> = ({
-  title,
-  id,
-  className,
-  ...props
-}) => {
+const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
+  const { mobile } = useContext(LayoutContext)!;
+
+  const CurrentTitle = useCallback(
+    () =>
+      mobile ? <TitleMobile title={title} /> : <TitleDesktop title={title} />,
+    [mobile, title]
+  );
+
+  return <CurrentTitle />;
+};
+
+const TitleDesktop: FC<SectionTitleProps> = ({ title }) => {
   const { currentBreakpoint } = useContext(LayoutContext)!;
   const { height: breakpointHeight } = currentBreakpoint;
 
   return (
-    <div
-      id={id ?? "section-title"}
-      className={className ?? "px-5 py-3 w-3/4 select-none"}
-      {...props}
-    >
+    <div id={"section-title"} className={"px-5 py-3 w-3/4 select-none"}>
       <p
         className={`
             pb-2 font-extralight
@@ -42,5 +45,22 @@ const SectionTitle: FC<SectionTitleProps> = ({
     </div>
   );
 };
+
+const TitleMobile: FC<SectionTitleProps> = ({ title }) => (
+  <div
+    id={"section-title"}
+    className={"pt-5 w-4/5 mx-auto text-center select-none"}
+  >
+    <p
+      className="
+          pb-2 mb-2
+          font-extralight text-5xl
+          border-b-6 border-chocolate-cosmos
+        "
+    >
+      {title}
+    </p>
+  </div>
+);
 
 export default SectionTitle;

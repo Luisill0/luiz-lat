@@ -1,26 +1,92 @@
-import { FC, useContext, useState } from "react";
+import { FC, useCallback, useContext, useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 
+import { HeroMobile } from "assets";
 import { Section } from "components/sections";
 import { LayoutContext } from "context/layout";
+import { useDocumentListener } from "hook/useListener";
 
 const HomeSection: FC = () => {
-  const { navbarHeight } = useContext(LayoutContext)!;
+  const { mobile } = useContext(LayoutContext)!;
+
+  const CurrentHome = useCallback(
+    () => (mobile ? <HomeMobile /> : <HomeDesktop />),
+    [mobile]
+  );
 
   return (
     <Section id="home">
-      <div
-        className="
+      <CurrentHome />
+    </Section>
+  );
+};
+
+const HomeDesktop = () => {
+  const { navbarHeight } = useContext(LayoutContext)!;
+  const [loading, setLoading] = useState(true);
+
+  const onLoadingFinished = () => setLoading(false);
+
+  useDocumentListener("loading-finished", onLoadingFinished);
+
+  return (
+    <div
+      className="
           text-center text-6xl
           h-[100vh]
           flex flex-col justify-center items-center
           select-none
         "
-        style={{ paddingTop: navbarHeight }}
+      style={{ paddingTop: navbarHeight }}
+    >
+      {!loading && <AnimatedText />}
+    </div>
+  );
+};
+
+const HomeMobile = () => {
+  const { navbarHeight, window } = useContext(LayoutContext)!;
+
+  const getFullHeight = useCallback(
+    () => window.innerHeight - navbarHeight,
+    [navbarHeight, window.innerHeight]
+  );
+
+  return (
+    <div
+      className="
+        h-[100vh]
+        select-none
+        relative
+      "
+      style={{ paddingTop: navbarHeight }}
+    >
+      <img
+        src={HeroMobile}
+        className="absolute object-cover brightness-50 transition-all z-10"
+        style={{
+          height: getFullHeight() + 1,
+          width: window.innerWidth + 1,
+          top: navbarHeight,
+        }}
+      />
+      <div
+        className="
+          text-6xl text-magnolia
+          relative z-30
+          flex flex-col justify-center items-center
+        "
+        style={{
+          height: getFullHeight(),
+          fontWeight: 275,
+        }}
       >
-        <AnimatedText />
+        <p>
+          Hi, I'm <span className="font-extrabold">Luis</span>
+        </p>
+        <p className="text-2xl">I am a Developer</p>
       </div>
-    </Section>
+    </div>
   );
 };
 

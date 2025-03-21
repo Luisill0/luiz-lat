@@ -38,12 +38,13 @@ const TextInput: FC<TextInputProps> = ({
           className={`
           flex flex-col
           ${className}
+          "p-inputtext-sm text-xs"
           ${
             breakpointHeight > BreakpointHeight.SM &&
             breakpointHeight < BreakpointHeight.LG &&
-            "p-inputtext-sm"
+            "md:p-inputtext-sm"
           }
-          ${breakpointHeight < BreakpointHeight.MD && "text-xs"}
+          ${breakpointHeight < BreakpointHeight.MD && "md:text-xs"}
         `}
         >
           <label htmlFor={name}>{label}:</label>
@@ -54,7 +55,7 @@ const TextInput: FC<TextInputProps> = ({
             {...field}
           />
           {errors[field.name] && (
-            <span className="text-red-900 text-sm">
+            <span className="text-red-900 text-xs md:text-sm">
               {errors[field.name]?.message}
             </span>
           )}
