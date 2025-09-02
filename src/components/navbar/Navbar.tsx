@@ -88,7 +88,7 @@ const PageIcon = () => (
       className="w-10 h-10"
       src="/android-chrome-192x192.png"
     />
-    <span className="h-fit w-fit">luiz.lat</span>
+    <span className="h-fit w-fit">luis.dev</span>
   </div>
 );
 
